@@ -1,4 +1,4 @@
 import React from 'react'
 import ReactLoading from 'react-loading'
 
-export default () => <ReactLoading type='bars' color='#fff' />
+export default () => <ReactLoading type='bars' color='#FFDEAD' />
