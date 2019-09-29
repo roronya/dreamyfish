@@ -6,6 +6,7 @@ import Game from './components/Game'
 
 export default () => {
   const [games, setGames] = useState([])
+  const [error, setError] = useState()
   useEffect(() => {
     // ?game=1234をパースして{game: 1234}にする
     const id = queryString.parse(window.location.search).game
@@ -15,19 +16,27 @@ export default () => {
     const port = chrome.runtime.connect({ name: 'dreamyfish' })
     port.postMessage({ id })
     port.onMessage.addListener(msg => {
+      if (msg.error) {
+        setError(msg.error)
+        return
+      }
       setGames(msg.games)
     })
   }, [])
   return (
     <div>
       <h3>このゲームに似ているゲーム</h3>
-      <Layout>
-        {games ? (
-          games.map(game => <Game key={game.id} game={game} />)
-        ) : (
-          <Loading />
-        )}
-      </Layout>
+      {error ? (
+        <p>データ取得に失敗しました</p>
+      ) : (
+        <Layout>
+          {games ? (
+            games.map(game => <Game key={game.id} game={game} />)
+          ) : (
+            <Loading />
+          )}
+        </Layout>
+      )}
     </div>
   )
 }
