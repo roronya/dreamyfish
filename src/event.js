@@ -15,11 +15,15 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 const db = firebase.firestore()
 
-console.log('loaded')
-db.collection('games')
-  .get()
-  .then(querySnapshot => {
-    querySnapshot.forEach(doc => {
-      console.log(`${doc.id} => ${doc.data()}`)
-    })
+chrome.runtime.onConnect.addListener(function (port) {
+  console.assert(port.name == 'dreamyfish')
+  port.onMessage.addListener(msg => {
+    console.log('recive message')
+    db.collection('games')
+      .get()
+      .then(querySnapshot => {
+        const games = querySnapshot.docs.map(doc => doc.data())
+        port.postMessage(games)
+      })
   })
+})
