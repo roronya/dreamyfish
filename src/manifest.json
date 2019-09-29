@@ -12,9 +12,7 @@
     }
   ],
   "background": {
-    "scripts": [
-      "background.js"
-    ],
+    "scripts": ["event.js"],
     "persistent": false
   }
 }

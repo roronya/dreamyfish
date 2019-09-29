@@ -5,7 +5,7 @@ module.exports = {
   mode: 'production',
   entry: {
     content: './src/content.js',
-    background: './src/background.js'
+    event: './src/event.js'
   },
   output: {
     path: `${__dirname}/build`,
