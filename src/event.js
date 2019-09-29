@@ -23,7 +23,7 @@ chrome.runtime.onConnect.addListener(function (port) {
       .get()
       .then(querySnapshot => {
         const games = querySnapshot.docs.map(doc => doc.data())
-        port.postMessage(games)
+        port.postMessage({ games })
       })
   })
 })
