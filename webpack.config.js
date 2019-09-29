@@ -3,10 +3,13 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = {
   mode: 'production',
-  entry: './src/index.js',
+  entry: {
+    content: './src/content.js',
+    event: './src/event.js'
+  },
   output: {
     path: `${__dirname}/build`,
-    filename: 'index.js'
+    filename: '[name].js'
   },
   module: {
     rules: [
