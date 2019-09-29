@@ -18,7 +18,6 @@ const db = firebase.firestore()
 chrome.runtime.onConnect.addListener(function (port) {
   console.assert(port.name == 'dreamyfish')
   port.onMessage.addListener(msg => {
-    console.log('recive message')
     db.collection('games')
       .get()
       .then(querySnapshot => {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Layout from './components/Layout'
 import Loading from './components/Loading'
+import Game from './components/Game'
 
 export default () => {
   const [games, setGames] = useState([])
@@ -19,7 +20,7 @@ export default () => {
     <div>
       <h3>このゲームに似ているゲーム</h3>
       <Layout>
-        {games ? games.map(game => <p key={game.id}>{game.name}</p>) : <Loading />}
+        {games ? games.map(game => <Game key={game.id} game={game} />) : <Loading />}
       </Layout>
     </div>
   )
