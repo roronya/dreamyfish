@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import queryString from 'query-string'
 import Layout from './components/Layout'
 import Loading from './components/Loading'
 import Game from './components/Game'
@@ -6,12 +7,13 @@ import Game from './components/Game'
 export default () => {
   const [games, setGames] = useState([])
   useEffect(() => {
+    // ?game=1234をパースして{game: 1234}にする
+    const id = queryString.parse(window.location.search).game
     // ref: https://developer.chrome.com/extensions/messaging
     // Simple one-time requestsではFirestoreに問い合わせている時間の間コネクションを維持してくれずチャンネルが落ちてしまったのでconnectを使っている
     // connectの引数はnameというキーを持ったオブジェクトでなければならない
-    // postMessageの引数は任意のオブジェクトを渡してメッセージとしてevent.jsに渡せるが、メッセージによる処理の場合分けは無いので適当に送っている
     const port = chrome.runtime.connect({ name: 'dreamyfish' })
-    port.postMessage('hello')
+    port.postMessage({ id })
     port.onMessage.addListener(msg => {
       setGames(msg.games)
     })
